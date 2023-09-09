@@ -251,18 +251,24 @@
                             </button>
                           {%- endif -%}
                           <quantity-input class="quantity cart-quantity">
-                            <button class="quantity__button no-js-hidden" name="minus" type="button">
+              
+                            <button class="quantity__button no-js-hidden 
+                             name="minus" type="button">
                               <span class="visually-hidden">
                                 {{- 'products.product.quantity.decrease' | t: product: item.product.title | escape -}}
                               </span>
                               {% render 'icon-minus' %}
                             </button>
+                
                             <input
-                              class="quantity__input"
+                              class="quantity__input {% if item.variant.id  == 46871455793454 %}inputValue {% endif %}"
                               data-quantity-variant-id="{{ item.variant.id }}"
                               type="number"
                               name="updates[]"
-                              value="{{ item.quantity }}"
+                            
+                            value="{{ item.quantity }}"
+                          
+                              
                               {% # theme-check-disable %}
                               data-cart-quantity="{{ cart | item_count_for_variant: item.variant.id }}"
                               min="{{ item.variant.quantity_rule.min }}"
@@ -274,17 +280,22 @@
                               aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
                               id="Quantity-{{ item.index | plus: 1 }}"
                               data-index="{{ item.index | plus: 1 }}"
-                            >
-                            <button class="quantity__button no-js-hidden" name="plus" type="button">
-                              <span class="visually-hidden">
-                                {{- 'products.product.quantity.increase' | t: product: item.product.title | escape -}}
-                              </span>
-                              {% render 'icon-plus' %}
-                            </button>
+                            
+                             >
+                            
+                              <button class="quantity__button no-js-hidden {% if item.variant.id  == 44101405704427 %}deleteBtn {% endif %}" name="plus" type="button">
+                                <span class="visually-hidden">
+                                  {{- 'products.product.quantity.increase' | t: product: item.product.title | escape -}}
+                                </span>
+                                {% render 'icon-plus' %}
+                              </button>
+                           
                           </quantity-input>
                         </div>
-                        <cart-remove-button
-                          id="Remove-{{ item.index | plus: 1 }}"
+                
+                        <cart-remove-button 
+                          data-variantId='{{ item.variant.id  }}'
+                          id="Remove-{{ item.index | plus: 1 }} "
                           data-index="{{ item.index | plus: 1 }}"
                         >
                           <a
@@ -295,6 +306,7 @@
                             {% render 'icon-remove' %}
                           </a>
                         </cart-remove-button>
+                  
                       </div>
                       {%- if has_qty_rules or has_vol_pricing -%}
                         <button

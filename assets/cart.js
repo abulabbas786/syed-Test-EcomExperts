@@ -2,12 +2,51 @@ class CartRemoveButton extends HTMLElement {
   constructor() {
     super();
 
-    this.addEventListener('click', (event) => {
+    this.addEventListener('click', async (event) => {
       event.preventDefault();
+      const variantIdToRemove = this.dataset.variantid;
+      if(variantIdToRemove == '46899165921582'){
+       
+        await this.deleteProduct('46871455793454');
+      }
       const cartItems = this.closest('cart-items') || this.closest('cart-drawer-items');
       cartItems.updateQuantity(this.dataset.index, 0);
     });
   }
+
+  deleteProduct(variantIdToUpdate) {
+    function removeItem() {
+      let variantId = cartBtn.getAttribute("data-variant-id");
+    
+      fetch("/cart/change.js", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: parseFloat(variantId),
+          quantity: 0,
+        }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("Failed to remove item from cart.");
+          }
+        })
+        .then((data) => {
+          cartBtn.textContent = "Add to cart";
+          cartBtn.removeAttribute("data-variant-id");
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+      
+  }
+  
+  
 }
 
 customElements.define('cart-remove-button', CartRemoveButton);

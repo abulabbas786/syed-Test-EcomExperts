@@ -166,7 +166,7 @@ class QuantityInput extends HTMLElement {
   quantityUpdateUnsubscriber = undefined;
 
   connectedCallback() {
-    this.validateQtyRules();
+    // this.validateQtyRules();
     this.quantityUpdateUnsubscriber = subscribe(PUB_SUB_EVENTS.quantityUpdate, this.validateQtyRules.bind(this));
   }
 
@@ -177,7 +177,7 @@ class QuantityInput extends HTMLElement {
   }
 
   onInputChange(event) {
-    this.validateQtyRules();
+    // this.validateQtyRules();
   }
 
   onButtonClick(event) {
