@@ -2,44 +2,25 @@ class CartRemoveButton extends HTMLElement {
   constructor() {
     super();
 
-    this.addEventListener('click', async (event) => {
+    this.addEventListener('click', (event) => {
       event.preventDefault();
       const variantIdToRemove = this.dataset.variantid;
-      if(variantIdToRemove == '46899165921582'){
-       
-        await this.deleteProduct('46871455793454');
-      }
+      
+      
       const cartItems = this.closest('cart-items') || this.closest('cart-drawer-items');
       cartItems.updateQuantity(this.dataset.index, 0);
+setTimeout(function(){
+
+
+      if(variantIdToRemove == '46899165921582'){
+        const element = document.querySelector('[data-variantid="46871455793454"]');
+        if (element) {
+          element.click();
+        }
+      }
+    },1000)
     });
   }
-
-  deleteProduct(variantIdToUpdate) {
-    alert(variantIdToUpdate)
-    const updatePayload = {
-      [variantIdToUpdate]: 0, 
-    };
-  
-    fetch(`${window.Shopify.routes.root}cart/update.js`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ updates: updatePayload }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log('Product removed from the cart.');
-        } else {
-          console.error('Failed to remove product from the cart.');
-        }
-      })
-      .catch((error) => {
-        console.error('An error occurred:', error);
-      });
-  }
-  
-  
 }
 
 customElements.define('cart-remove-button', CartRemoveButton);
