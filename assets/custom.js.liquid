@@ -3,7 +3,8 @@
 if(window.location.href.includes('product')){
     setTimeout(function name(params) {
         document.querySelector('#customSelect').addEventListener('change',(e)=>{
-            document.querySelector('input[value="'+ e.target.value + '"]').click()
+            document.querySelector('input[value="'+ e.target.value + '"]').click();
+            document.querySelector('.product-form__submit ').style.cursor = 'pointer';
         });
     },1000);
 
@@ -68,5 +69,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     return url;
   }
+  setTimeout(()=>{
+let sleectedvalue = document.querySelector('#customSelect').value;
+console.log(sleectedvalue)
+document.querySelector('.product-form__submit ').style.cursor = 'no-drop';
+},500);
 }
 
