@@ -1,4 +1,5 @@
 //Click the size Options on optin change
+
 if(window.location.href.includes('product')){
     setTimeout(function name(params) {
         document.querySelector('#customSelect').addEventListener('change',(e)=>{
@@ -46,4 +47,26 @@ function addToCartByVariantId() {
         console.log('Error',error)
     });
 }
+// remove variant on reload select default
+document.addEventListener('DOMContentLoaded', function() {
+    let currentUrl = window.location.href;
+    currentUrl = removeQueryParam(currentUrl, 'variant');
+    history.replaceState({}, document.title, currentUrl);
+  });
+  function removeQueryParam(url, param) {
+    const urlParts = url.split('?');
+    if (urlParts.length >= 2) {
+      const prefix = encodeURIComponent(param) + '=';
+      const queryParams = urlParts[1].split(/[&;]/g);
+  
+      for (let i = queryParams.length - 1; i >= 0; i--) {
+        if (queryParams[i].lastIndexOf(prefix, 0) === 0) {
+          queryParams.splice(i, 1);
+        }
+      }
+      return urlParts[0] + (queryParams.length > 0 ? '?' + queryParams.join('&') : '');
+    }
+    return url;
+  }
 }
+
