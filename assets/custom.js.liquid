@@ -1,0 +1,50 @@
+//Click the size Options on optin change
+if(window.location.href.includes('product')){
+    setTimeout(function name(params) {
+        document.querySelector('#customSelect').addEventListener('change',(e)=>{
+            document.querySelector('input[value="'+ e.target.value + '"]').click()
+        });
+    },1000);
+
+window.addEventListener("DOMContentLoaded", (event) => {
+document.querySelector('.product-form__submit').addEventListener('click',(e)=>{
+    let varientIdSelected = document.querySelector('.product-variant-id').value;
+   
+    if(varientIdSelected == '46899165921582'){
+        setTimeout(function(){  
+        addToCartByVariantId();
+    },500); 
+    }
+});
+}); 
+function addToCartByVariantId() {
+    alert()
+    const data={
+        items:[
+            {
+            id:46871455793454,
+            quantity:1
+            }
+        ]
+    }
+    fetch('/cart/add.js',{
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json',
+            'X-Requested-With':'XMLHttpRequest'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data=>{
+        if(data.status == 'success'){
+            console.log('Product Added to cart');
+        }else{
+            console.log('Error Adding Product');
+        }
+    })
+    .catch(error =>{
+        console.log('Error',error)
+    });
+}
+}
