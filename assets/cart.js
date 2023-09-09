@@ -15,35 +15,28 @@ class CartRemoveButton extends HTMLElement {
   }
 
   deleteProduct(variantIdToUpdate) {
-    function removeItem() {
-      let variantId = cartBtn.getAttribute("data-variant-id");
-    
-      fetch("/cart/change.js", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: parseFloat(variantId),
-          quantity: 0,
-        }),
+    alert(variantIdToUpdate)
+    const updatePayload = {
+      [variantIdToUpdate]: 0, 
+    };
+  
+    fetch(`${window.Shopify.routes.root}cart/update.js`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ updates: updatePayload }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log('Product removed from the cart.');
+        } else {
+          console.error('Failed to remove product from the cart.');
+        }
       })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error("Failed to remove item from cart.");
-          }
-        })
-        .then((data) => {
-          cartBtn.textContent = "Add to cart";
-          cartBtn.removeAttribute("data-variant-id");
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    }
-      
+      .catch((error) => {
+        console.error('An error occurred:', error);
+      });
   }
   
   

@@ -35,7 +35,7 @@
         <legend class="form__label">{{ option.name }}</legend>
         <select id="customSelect">
           {%- for value in option.values -%}
-          <option>{{ value }}</option>
+          <option {%if value == 'Unselected'%} disabled {% endif %}>{{ value }}</option>
         {% endfor %}
         </select>
       {% endif %}
