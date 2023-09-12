@@ -70,11 +70,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     return url;
   }
-  setTimeout(()=>{
+
+  setInterval(()=>{
 let sleectedvalue = document.querySelector('#customSelect').value;
 console.log(sleectedvalue)
+if(sleectedvalue == 'Unselected'){
 document.querySelector('.product-form__submit ').style.cursor = 'no-drop';
 document.querySelector('.product-form__submit ').disabled = true;
-},500);
+}else{
+    document.querySelector('.product-form__submit ').style.cursor = 'pointer';
+}
+},300);
 }
 
